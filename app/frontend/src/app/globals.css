@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: #f7f5f2;
+  --ink: #1c1f26;
+}
+
+body {
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Minimal motion — short, instant transitions only. No cinematic effects. */
+.btn-press {
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}

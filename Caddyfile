@@ -1,0 +1,18 @@
+# Caddy reverse proxy inside the Fly machine. Fly terminates TLS at the edge
+# and forwards plain HTTP to internal_port 8080. Backend owns /api + /health;
+# everything else is the Next.js app.
+:8080 {
+	encode gzip
+
+	handle /api/* {
+		reverse_proxy localhost:8030
+	}
+
+	handle /health {
+		reverse_proxy localhost:8030
+	}
+
+	handle {
+		reverse_proxy localhost:3030
+	}
+}

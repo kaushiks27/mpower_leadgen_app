@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+pydantic>=2
+sqlalchemy[asyncio]>=2
+aiosqlite
+httpx
+itsdangerous
+argon2-cffi
+resend>=2.29
+python-multipart
+cryptography>=42
+pytest
+pytest-asyncio

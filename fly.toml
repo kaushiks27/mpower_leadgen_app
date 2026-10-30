@@ -1,0 +1,37 @@
+# Fly.io config — mPower Lead-Gen. Single machine, Mumbai (bom).
+# Secrets (SECRET_KEY, RESEND_API_KEY, EMAIL_FROM, SEED_ADMIN_EMAIL, APP_BASE_URL,
+# APP_BRAND_NAME) are set via `fly secrets set` — never committed. See
+# directives/deployment_checklist.md.
+app = "mpower-leadgen"
+# bom (Mumbai) had no Fly capacity (volume + VM) on 2026-06-02 → launched in sin
+# (Singapore), closest available APAC region. Revisit bom when capacity returns.
+primary_region = "sin"
+
+[build]
+
+[env]
+  ENV = "prod"
+  EMAIL_ENABLED = "true"
+  # PERSISTENT SQLite on the Fly volume mounted at /data (see [mounts] below).
+  # 4 slashes = absolute path /data/mpower_leadgen.db. The volume survives
+  # redeploys, so the DB (admin user, leads, campaigns, saved API keys, the
+  # Brain catalog) is NO LONGER wiped on deploy — and seed_admin_if_missing
+  # finds the existing admin, so the login invite is not re-sent each deploy.
+  DATABASE_URL = "sqlite+aiosqlite:////data/mpower_leadgen.db"
+
+# Persistent storage — the DB lives here and is untouched by deploys (which only
+# replace the app image). Single machine + single volume (region sin).
+[mounts]
+  source = "mpower_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "1gb"

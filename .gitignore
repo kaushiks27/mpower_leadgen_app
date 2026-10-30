@@ -1,0 +1,44 @@
+# Intermediates — never commit
+.tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Databases (local dev state — never commit, never wipe)
+*.db
+*.sqlite
+*.sqlite3
+app/backend/app/db/*.sqlite*
+app/backend/*.db
+
+# Node / Next.js
+node_modules/
+app/frontend/.next/
+app/frontend/out/
+app/frontend/next-env.d.ts
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+
+# OS / editor
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# Fly
+fly.local.toml
+
+
+# Data exports and build state — never commit real lead data
+*.csv
+*.xlsx
+*.xls
+*.tsbuildinfo
